@@ -47,3 +47,38 @@ section.hero{
         outline: none;
     }
 }
+
+// style for order now btn in hero section
+.btn-primary{
+    background: $primary;
+    transition: $smooth;
+
+    &:hover{
+        background: $primary-hover;
+    }
+}
+
+// greyish tint to background of cart page 
+section.cart{
+    background: $secondary;
+    // inside cart section, give primary color to total price figure
+    .amount{
+        color: $primary;
+    }
+}
+
+// greyish tint to background of login page
+section.login{
+    background: $secondary;
+    // subtract 86px(height of navbar)
+    min-height: calc(100vh - 86px);
+}
+
+// style dont have account btn on login page
+.dont-have-account{
+    color: $primary;
+    transition: $smooth;
+    &:hover{
+        color: $primary-hover;
+    }
+}
