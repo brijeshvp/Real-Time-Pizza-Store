@@ -1,0 +1,32 @@
+Front-end
+    ejs(embedded js template engine) - template engine
+    express-ejs-layouts - for layout support in express for ejs template engine
+    sass - css pre-processor
+Back-end
+    nodejs + expressjs + mongoDb
+Real-time communication(both at user and admin side)
+    Web Sockets - sockets.io library
+
+folder structure on express app inspired from laravel framework
+package manager: npm
+
+App/project architecture: MVC
+
+dev dependency:- nodemon(for auto reload server on changes) -> installed globally on my machine 
+but still install as 'npm install nodemon -D' -> to install as a dev dependency in a project
+
+Folder Structure:-
+    app folder: contains all backend logic
+        config folder: it contains all app config like auth system config like login/register
+        http folder: it contains request related files like controllers and middlewares
+            controllers folder: it contains all controllers(main backend logic)
+            middleware folder: it contains all middlewares
+        models folder: it contains all models to interact with db
+ 
+    resources: it contains all views/templates(ejs template engine files which will be compiled into html files), scss files(which will be compiled to public folder), js files(which will be compiled to public folder) 
+
+    public folder: it contains compiled css,compiled js, img, fonts,etc...
+
+    routes folder: it contains routes(endpoints)
+        web.js: contains all web related routes
+        api.js: contains all api endpoints(backend)
