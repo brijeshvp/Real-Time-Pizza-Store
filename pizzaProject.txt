@@ -12,6 +12,7 @@ package manager: npm
 
 App/project architecture: MVC
 
+dev dependency are those which we need only for development and not in production
 dev dependency:- nodemon(for auto reload server on changes) -> installed globally on my machine 
 but still install as 'npm install nodemon -D' -> to install as a dev dependency in a project
 
@@ -30,3 +31,27 @@ Folder Structure:-
     routes folder: it contains routes(endpoints)
         web.js: contains all web related routes
         api.js: contains all api endpoints(backend)
+
+
+Laravel mix(dev dependency):- Mix makes it extremly easy to compile and minify your application's CSS and JavaScript files.
+similar to webpack. it compiles all css & js code in public folder
+
+laravel-mix guide:- https://laravel-mix.com/docs/6.0/installation
+follow the above guide to setup
+goto examples section to mix both js and scss files
+
+to read webpack.mix.js config file and compile assets, run:
+    npx mix
+but to watch for changes automatically on our js and scss files, run:
+    npx mix watch
+
+check this guide for more: https://laravel-mix.com/docs/6.0/cli
+
+tailwind css for fast styling
+just include cdn for tailwind, don't download
+goto https://tailwindcss.com/docs/installation/play-cdn
+and copy script tag in head of home.ejs(html)
+
+NOTE: we can't write custom css in tailwind css cdn. 
+For that, we need to download tailwind css and install.
+For simplicity, we write our own custom css by specifying manual classes and writing css rules in app.scss wherever required

@@ -1,0 +1,49 @@
+@import './variables';  // import _variables.scss file
+
+body{
+    font-family: 'Lato', sans-serif; // copy css rule from lato google font
+    -webkit-font-smoothing: antialiased; // anti aliasing makes the font Smooth on level of pixel, as opposed to the subpixel. Switching from subpixel rendering to antialiasing for light text on dark backgrounds makes it look lighter.
+    color: $dark;
+}
+
+// apply primary color to cart icon at top right in navbar
+nav li:last-child a{
+    background: $primary;
+    &:hover{
+        background: $primary-hover;
+    }
+}
+
+// set hover effect on menus in navbar
+nav li a{
+    transition: $smooth;
+    &:hover{
+        color: $primary;
+    }
+}
+
+// greyish tint in background of hero section
+section.hero{
+    background: $secondary;
+}
+
+// greyish tint to pizza size in single pizza card
+.size{
+    background: $secondary;
+}
+
+// style for add-to-cart btn in single pizza card
+.add-to-cart{
+    border: 2px solid $primary;
+    color: $primary;
+    transition: $smooth;
+    
+    &:hover{
+        background: $primary;
+        border-color: $pure;
+        color: $pure;
+    }
+    &:focus{
+        outline: none;
+    }
+}

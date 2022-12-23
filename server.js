@@ -5,7 +5,12 @@ const expressLayout = require('express-ejs-layouts');
 const path = require('path');
 
 // port
-let PORT = process.env.PORT || 3300;
+let PORT = process.env.PORT || 3000;
+
+// specify static dir to express(so that it can run css and js)
+// default MIME type is text/html
+// if not specify this, css and js will not run
+app.use(express.static('public'));
 
 // not working
 // // set template engine

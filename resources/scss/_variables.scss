@@ -1,0 +1,18 @@
+// underscore in file name, denotes that it is partial file which means it is used for just import in other scss files
+
+// colors
+$primary: #FE5F1E;
+$primary-hover: #b23301;
+$secondary: #F8F8F8;
+$pure: #fff;
+$dark: #232323;
+$gray: #ccc;
+
+// transition
+/* on applying this as:
+transition: $smooth;
+the effect will take 0.3 delay and will look smooth
+// keeping transition same in whole website, gives good experience to user.
+so keep it in a variable
+*/ 
+$smooth: all .3s ease-in-out;
