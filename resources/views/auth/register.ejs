@@ -7,9 +7,10 @@
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Register Here</h2>
             
           </div>
-
+          <!-- send data to /register using post request -->
           <form action="/register" method="POST" class="mt-8 space-y-6">
             <!-- if error msgs, show here -->
+            <!-- error msgs coming from postRegister method in authController using flash msgs -->
             <% if(messages.error) { %>
             <span class="text-red-500 text-small"><%= messages.error %></span>
             <% } %>

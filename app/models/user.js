@@ -8,6 +8,7 @@ const userSchema = new Schema({
     password: {type: String, required:true},
     role: {type: String, default:'customer'}
 },{timestamps: true})
+// timestamps specifies registration time of user. will be stored in db
 
 const User = mongoose.model('User',userSchema)
 

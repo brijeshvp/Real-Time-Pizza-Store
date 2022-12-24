@@ -9,6 +9,10 @@ const path = require('path');
 // by default, express server don't understand json data
 // to recieve json data in req and res, specify it to express
 app.use(express.json());
+// when recieving data using post request from forms, data is url encoded
+// by default, express server don't understand url encoded data
+// specify explicitly
+app.use(express.urlencoded({extended:false}));
 
 
 // db connection
@@ -25,9 +29,11 @@ connection.once('open', () =>{
     console.log('Database connected...');
 })
 
+
 // flash config
 const flash = require("express-flash");
 app.use(flash());   // use flash as a middleware in express
+// to display flash msg in frontend, specify to express
 
 
 
@@ -56,14 +62,25 @@ app.use(session({
 
 // NOTE:- keep this global middleware below session definition and configuration else error
 // global middleware
-// by default, session is not available in front-end
-// so specify session globally
+// by default, session and logged-in user is not available in front-end
+// so specify session and logged-in user globally
 // then it will be available 
 app.use((req,res,next)=>{
   res.locals.session = req.session
+  res.locals.user = req.user
   next()  // call this next() function to process req further, else page will keep loading
 })
 
+// NOTE: keep passport config after session config since passport uses sessions. else error
+// passport config
+// Guide: https://www.npmjs.com/package/passport
+const passport = require('passport');
+const passportInit = require('./app/config/passport');
+// pass passport module in /app/config/passport to configure it there
+passportInit(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+// If your application uses persistent login sessions (recommended, but not required), passport.session() middleware must be used.
 
 // port
 let PORT = process.env.PORT || 3000;

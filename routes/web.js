@@ -6,15 +6,16 @@ const cartController = require('../app/http/controllers/customers/cartController
 // const AdminOrderController = require('../app/http/controllers/admin/orderController')
 // const statusController = require('../app/http/controllers/admin/statusController')
 
-// // import middlewares
-// const guest = require('../app/http/middlewares/guest')  
+// import middlewares
+// refer guest middleware to understand more about this middlewares
+const guest = require('../app/http/middlewares/guest')  // this middleware is used to specify usage of /login and /register routes to user
 // const auth = require('../app/http/middlewares/auth')  
 // const admin = require('../app/http/middlewares/admin')  
 
 // app is a express() object
 // all objects are passed by reference to any function in js
 // export this function to server.js and pass app object here from there
-function initRoutes(app){
+const initRoutes = (app)=> {
     // 2nd arg of app.get(), app.post(),etc.. request, is a call back function having req,res as arg
     // this callbacks we will keep in controllers because when serving post requests, we may need to write big logic
     // to keep code clean use controllers and write callback there
@@ -25,10 +26,16 @@ function initRoutes(app){
 
     // auth routes
     const authControllerObj = authController()
-    // app.get('/login',guest,authControllerObj.login)
-    // app.post('/login',authControllerObj.postLogin)
-    // app.get('/register',guest,authControllerObj.register)
-    // app.post('/register',authControllerObj.postRegister)
+    // get login will provide login page to user
+    // provide guest middleware to get login
+    // bcoz when user specify /login route, we want to specify usage of /login route
+    app.get('/login',guest,authControllerObj.login)
+    // post login will be used to submit login details to server and login user
+    app.post('/login',authControllerObj.postLogin)
+    // provide guest middleware to get register
+    // bcoz when user specify /register route, we want to specify usage of /register route
+    app.get('/register',guest,authControllerObj.register)
+    app.post('/register',authControllerObj.postRegister)
     app.post('/logout',authControllerObj.logout)
     
     // cart routes
