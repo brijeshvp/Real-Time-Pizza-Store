@@ -12,6 +12,11 @@
             <!-- div containing pizzas in the cart -->
             <!-- pizza-list is a custom class to style pizzas in the cart section -->
             <div class="pizza-list">
+                <!-- pizza items are object, so to loop them convert it to array  -->
+                <!-- for of loop on array -->
+                <!-- Object.values(obj) gives array of values in items in cart object. -->
+                <!-- thus each value in array is item object which is details of pizzas in cart -->
+                <!-- access pizza details using pizza.item.<field> -->
                 <% for(let pizza of Object.values(session.cart.items) ) { %>
                     <!-- single pizza item in cart -->
                     <div class="flex items-center my-8">
@@ -33,7 +38,8 @@
                         <!-- span for selected pizza price in cart -->
                         <span class="font-bold text-lg">₹ <%= pizza.item.price * pizza.qty %></span>
                     </div>
-                    <% } %>
+                    <% } %> 
+                    <!-- for loop ends -->
             </div>
             <hr />
             <!-- div containing total amount, address form and order now button -->
@@ -118,4 +124,5 @@
                 </div>
             </div>
             <% } %>
+            <!-- else ends -->
 </section>

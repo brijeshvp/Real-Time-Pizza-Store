@@ -22,7 +22,9 @@
 <h1 class="text-xl font-bold mb-8">All Pizzas</h1>
 <!-- wrapper containing pizza cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 col-gap-12 row-gap-16">
-    <% pizzas.forEach(function(pizza){ %>
+    <!-- pizzas is array of objects coming from homeController  -->
+    <!-- so we can use forEach loop since array is iterable -->
+    <% pizzas.forEach((pizza)=>{ %>
         <!-- single pizza card -->
         <div class="w-full md:w-64">
         <img class="h-40 mb-4 mx-auto" src="/img/<%= pizza.image %>" alt="" />
@@ -35,6 +37,10 @@
             <div class="flex items-center justify-around mt-6">
             <span>₹ <%= pizza.price %></span>
             <!-- add-to-cart is custom class to style add to cart btn -->
+            <!-- set data attribute data-<any name> -->
+            <!-- so that we can get this data in js -->
+            <!-- convert pizza object to string since can't assign object to data attribute -->
+            <!-- will convert into json in js file -->
             <button data-pizza="<%= JSON.stringify(pizza) %>" class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold">
                 <span>+</span>
                 <span class="ml-4">Add</span>
