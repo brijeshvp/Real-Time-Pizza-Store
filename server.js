@@ -5,6 +5,10 @@ const app = express();
 const ejs = require('ejs');
 const expressLayout = require('express-ejs-layouts');
 const path = require('path');
+// import passport module
+const passport = require('passport');
+// import passport configuration file 
+const passportInit = require('./app/config/passport');
 
 // by default, express server don't understand json data
 // to recieve json data in req and res, specify it to express
@@ -14,6 +18,17 @@ app.use(express.json());
 // specify explicitly
 app.use(express.urlencoded({extended:false}));
 
+
+// flash config
+const flash = require("express-flash");
+app.use(flash());   // use flash as a middleware in express
+// to display flash msg in frontend, specify to express
+
+
+const Emitter = require('events')
+// Event emitter
+const eventEmitter = new Emitter()
+app.set('eventEmitter',eventEmitter)
 
 // db connection
 // Import the mongoose module
@@ -28,19 +43,16 @@ const connection = mongoose.connection;
 connection.once('open', () =>{
     console.log('Database connected...');
 })
+// to store sessions in mongodb
+const MongoDbStore = require('connect-mongo');
 
 
-// flash config
-const flash = require("express-flash");
-app.use(flash());   // use flash as a middleware in express
-// to display flash msg in frontend, specify to express
 
 
 
 // session config
 const session = require('express-session');
-// to store sessions in mongodb
-const MongoDbStore = require('connect-mongo');
+
 // any session require cookies for their working. and we need to encrypt the cookies using secret key
 // store secret keys,api keys,passwords in .env file
 // NOTE:- life time of session = life time of cookie
@@ -60,6 +72,18 @@ app.use(session({
 //   NOTE: in banking apps, cookie time is very less e.g. 5-15mins for security reasons
 
 
+
+// NOTE: keep passport config after session config since passport uses sessions. else error
+// passport config
+// Guide: https://www.npmjs.com/package/passport
+
+// pass passport module in /app/config/passport to configure it there
+passportInit(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+// If your application uses persistent login sessions (recommended, but not required), passport.session() middleware must be used.
+
+
 // NOTE:- keep this global middleware below session definition and configuration else error
 // global middleware
 // by default, session and logged-in user is not available in front-end
@@ -71,16 +95,6 @@ app.use((req,res,next)=>{
   next()  // call this next() function to process req further, else page will keep loading
 })
 
-// NOTE: keep passport config after session config since passport uses sessions. else error
-// passport config
-// Guide: https://www.npmjs.com/package/passport
-const passport = require('passport');
-const passportInit = require('./app/config/passport');
-// pass passport module in /app/config/passport to configure it there
-passportInit(passport);
-app.use(passport.initialize());
-app.use(passport.session());
-// If your application uses persistent login sessions (recommended, but not required), passport.session() middleware must be used.
 
 // port
 let PORT = process.env.PORT || 3000;
@@ -112,3 +126,30 @@ initRoutes(app);
 app.listen(PORT,()=>{
     console.log(`Listening on port: ${PORT}`);
 })
+
+
+// // socket
+// const io= require('socket.io')(server)
+// io.on('connection',(socket) =>{
+//   // join
+
+//   // console.log(socket.id)
+//   socket.on('join',(orderId) =>{
+//   // console.log(orderId)
+//     socket.join(orderId)
+//   })
+// })
+
+// eventEmitter.on('orderUpdated',(data) =>{
+//   io.to( `order_${data.id}`).emit('orderUpdated',data)
+// })
+
+// eventEmitter.on('orderPlaced',(data) =>{
+//   io.to('adminRoom').emit('orderPlaced',data)
+// })
+
+// // 404 page
+// app.use((req,res) =>{
+//   // res.status(404).send('<h1> 404, Page not found</h1>')
+//   res.status(404).render('errors/404')
+// })

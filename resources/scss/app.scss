@@ -91,3 +91,8 @@ section.login{
     border-radius: 50px !important;
     padding-left: 8px !important;
 }
+
+// to give orange color to  order id in order section
+a.link{
+    color: $primary;
+}

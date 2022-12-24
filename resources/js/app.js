@@ -1,8 +1,9 @@
 // another syntax to import modules
 import axios from 'axios'   
 import Noty from  'noty'
-// import { initAdmin } from './admin'
-// import moment from 'moment'
+// import from admin.js
+import { initAdmin } from './admin'
+import moment from 'moment'
 // import {initStripe} from './stripe'
 
 // get span tag in navbar near cart icon to display totalQty in cart 
@@ -58,7 +59,9 @@ addToCart.forEach((btn) => {
 
 
 // remove alert message after X seconds
+// capture sucess alert at order section here
 const alertMsg = document.querySelector('#success-alert')
+// if there is sucess alert to show, remove it after 2 secs
 if(alertMsg){
     setTimeout(() => {
         alertMsg.remove()

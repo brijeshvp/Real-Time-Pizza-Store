@@ -1,0 +1,22 @@
+<section class="orders light-section">
+    <div class="container mx-auto pt-12">
+        <h1 class="font-bold text-lg mb-4">All Orders</h1>
+        
+        <table class="w-full table-auto bg-white">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 text-left">Orders</th>
+                    <th class="px-4 py-2 text-left">Customers</th>
+                    <th class="px-4 py-2 text-left">Address</th>
+                    <th class="px-4 py-2 text-left">Status</th>
+                    <th class="px-4 py-2 text-left">Placed at</th>
+                    <th class="px-4 py-2 text-left">Payment Status</th>
+                </tr>
+            </thead>
+            <!-- this data in tbody will be populated from db(all orders at admin side) with real time communication(no page reload) using socket.io -->
+            <!-- so will do it from resources/js/admin.js -->
+            <tbody id="orderTableBody">
+            </tbody>
+        </table>
+    </div>
+</section>

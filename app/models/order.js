@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
+    // custId refers/links to userId in User collection
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

@@ -122,3 +122,10 @@ we will use passport-local strategy package(using username and password) for now
 install using:
     npm install passport-local
 Guide: https://www.passportjs.org/packages/passport-local/
+
+
+use moment: to format date and time at order section page for each order.
+A JavaScript date library for parsing, validating, manipulating, and formatting dates.
+install using: 
+    npm install moment --save
+Guide: https://momentjs.com/

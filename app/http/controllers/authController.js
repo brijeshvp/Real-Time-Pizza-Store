@@ -7,6 +7,7 @@ const passport = require('passport')
 
 // authController is a factory function -> which creates and returns an object(object creational pattern technique)
 const authController = ()=>{
+    // method name beginning with _ are referred to as private methods and are for use only in same module(js file)
     const _getRedirectUrl = (req) => {
         return req.user.role === 'admin'?'/admin/orders' : '/customer/orders'
     }
@@ -23,7 +24,7 @@ const authController = ()=>{
             // there we have called done fn, here we are defining done fn.
 
             // passport.authenticate() returns a fn, so call it after recieving it
-            const fn = passport.authenticate('local',(err,user,info) =>{
+            passport.authenticate('local',(err,user,info) =>{
                 // info is message obj(see done fn in /app/config/passport.js)
                 if(err){
                     req.flash('error',info.message)
@@ -46,8 +47,7 @@ const authController = ()=>{
                     // else redirect to url specified in req
                     return res.redirect(_getRedirectUrl(req))
                 })
-            })
-            fn(req,res,next);
+            })(req,res,next)
         },
         register(req,res){
             res.render('auth/register')
@@ -106,7 +106,12 @@ const authController = ()=>{
             })
         },
         logout(req,res){
-            req.logout()
+            // console.log(req);
+            req.logout((err,any)=>{
+                if(err){
+                    console.log(err);
+                }
+            })
             return res.redirect('/login')
         }
     }
