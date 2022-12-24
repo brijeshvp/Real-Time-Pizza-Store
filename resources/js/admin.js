@@ -3,6 +3,7 @@ import axios from 'axios'
 import moment from 'moment'
 import Noty from 'noty'
 
+// we recieving socket obj from app.js
 export function initAdmin(socket) {
     // fetch admin order section table's tbody
     // to feed orders using web sockets(in real time)
@@ -102,14 +103,25 @@ export function initAdmin(socket) {
     }
 
     // Socket
+    // listen to event named orderPlaced
+    // 2nd arg = fn recieving order details of newly placed order
     socket.on('orderPlaced', (order) => {
+        // show new order msg in admin section
         new Noty({
             type: 'success',
             timeout: 1000,
             text: 'New order!',
             progressBar: false,
         }).show();
+
+        // orders is array
+        // push() method will add new orders to end of array
+        // but we want new orders on top
+        // so use unshift() which adds elt to front of array
         orders.unshift(order)
+
+        // clear previously available orders in order table in admin section and feed new array orders by generating its markup
+        // NOTE: in new orders array, new orders are at top
         orderTableBody.innerHTML = ''
         orderTableBody.innerHTML = generateMarkup(orders)
     })

@@ -21,6 +21,8 @@ __webpack_require__.r(__webpack_exports__);
 // to show placed at time at admin order section
 
 
+
+// we recieving socket obj from app.js
 function initAdmin(socket) {
   // fetch admin order section table's tbody
   // to feed orders using web sockets(in real time)
@@ -72,14 +74,25 @@ function initAdmin(socket) {
   }
 
   // Socket
+  // listen to event named orderPlaced
+  // 2nd arg = fn recieving order details of newly placed order
   socket.on('orderPlaced', function (order) {
+    // show new order msg in admin section
     new (noty__WEBPACK_IMPORTED_MODULE_1___default())({
       type: 'success',
       timeout: 1000,
       text: 'New order!',
       progressBar: false
     }).show();
+
+    // orders is array
+    // push() method will add new orders to end of array
+    // but we want new orders on top
+    // so use unshift() which adds elt to front of array
     orders.unshift(order);
+
+    // clear previously available orders in order table in admin section and feed new array orders by generating its markup
+    // NOTE: in new orders array, new orders are at top
     orderTableBody.innerHTML = '';
     orderTableBody.innerHTML = generateMarkup(orders);
   });
@@ -177,32 +190,53 @@ if (alertMsg) {
   }, 2000);
 }
 
-// Change order status
+// Change order status logic
+
+// fetch status name's li tag from single order page
+// statuses is array of li's
 var statuses = document.querySelectorAll('.status_line');
 // console.log(statuses)
+
+// fetch hiddenInput element from singleOrder frontend page whose value is order details in string form  
 var hiddenInput = document.querySelector('#hiddenInput');
+// if order there, then give order in string form(which is value in hiddenInput) else store null
 var order = hiddenInput ? hiddenInput.value : null;
+// convert order string in order object back
 order = JSON.parse(order);
 // console.log(order)
+
+// create small tag to show status update time in previously completed status
 var time = document.createElement('small');
 function updateStatus(order) {
+  // statuses is array of li's containing status names from single order page
+  // so we can use forEach loop on array
+  // first remove completed and current class from status which is going to complete so that its color turns to gray(and not primary)
   statuses.forEach(function (status) {
     status.classList.remove('step-completed');
     status.classList.remove('current');
   });
+
+  // for 1st step, let stepCompleted = true always initially
   var stepCompleted = true;
   statuses.forEach(function (status) {
+    // fetch value of 'status' data attribute of each status names
     var dataProp = status.dataset.status;
     if (stepCompleted) {
       status.classList.add('step-completed');
     }
+    //    if value of dataProp is same as order status(in db), show time in previously completed status and make current status color = primary
     if (dataProp === order.status) {
-      stepCompleted = false;
+      // show status update time in this status(since it is completed)
+      // updatedAt is field automatically added in db for any document
       time.innerText = moment__WEBPACK_IMPORTED_MODULE_2___default()(order.updatedAt).format('hh:mm A');
+      // insert this small tag in this status, which is going to complete
       status.appendChild(time);
+      // if there is next status available, make it next current (by adding current class, its color bcomes primary)
       if (status.nextElementSibling) {
         status.nextElementSibling.classList.add('current');
       }
+      // for next current status, stepCompleted will be false
+      stepCompleted = false;
     }
   });
 }
@@ -210,25 +244,45 @@ updateStatus(order);
 initStripe();
 
 // socket
+// this io we get bcoz we include socket.io script in layout.ejs
 var socket = io();
 // join 
+// whenever browser comes to single order page(order is true), room will be created with name = order id and browser will join that room
 if (order) {
+  // 1st arg = event name
+  // 2nd arg = data to be sent to our express server.js = order_<orderId> = our private room name
   socket.emit('join', "order_".concat(order._id));
 }
+
+// using private room for recieving orders in real time in admin order section
+// to get url of the page
 var adminAreaPath = window.location.pathname;
 // console.log(adminAreaPath)
+// to identify if we are on the admin page or not
+// if we are on the admin side, emit the same event having key = 'join'
+// 1st arg = event key
+// 2nd arg = room name(since only one room for admin, we can keep name = adminRoom -> no need to use id -> we used id for order bcoz for each order we need a seperate room, but here only one room on admin side)
 if (adminAreaPath.includes('admin')) {
   (0,_admin__WEBPACK_IMPORTED_MODULE_1__.initAdmin)(socket);
   socket.emit('join', 'adminRoom');
 }
 // order_(id)   -> name of a private room(unique room for each order will be created)
 
+// listen to event emitted from private room
+// 1st arg = event name
+// 2nd arg = fn recieving data emitted along with event from private room
 socket.on('orderUpdated', function (data) {
+  // get order obj copy
   var updatedOrder = _objectSpread({}, order);
+  // update order status's update time with current time
   updatedOrder.updatedAt = moment__WEBPACK_IMPORTED_MODULE_2___default()().format();
+  // update updated status coming from data in emitted from private room
   updatedOrder.status = data.status;
   // console.log(data)
+
+  // now call updateStatus fn with updated order obj
   updateStatus(updatedOrder);
+  // also notify on user's single order page about order update
   new (noty__WEBPACK_IMPORTED_MODULE_0___default())({
     type: 'success',
     timeout: 1000,

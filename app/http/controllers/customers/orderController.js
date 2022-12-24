@@ -39,6 +39,8 @@ const orderController = ()=>{
             // save order
             order.save().then((result) =>{
                 // Order.populate() 
+                // customerId of order collection is refering to user id in user collection
+                // so .populate() will fetch whole user details based on customerId here
                 Order.populate(result,{path:'customerId'},(err,placedOrder) =>{
                     // req.flash('success','Order placed successfully')
 
@@ -61,8 +63,10 @@ const orderController = ()=>{
                             // ord will recieve result saved 
                             placedOrder.save().then((ord) =>{
                                 // console.log(ord)
-                                // Emit on socket here, instead of below
+
+                                // get the emitter here
                                 const eventEmitter = req.app.get('eventEmitter')
+                                // when we save order(user places an order), emit orderPlaced named event so that we can show the order details in real time in admin order section (we passed the order object along with event)
                                 eventEmitter.emit('orderPlaced',ord)
                                 // empty cart after successful order placed
                                 delete req.session.cart
@@ -113,13 +117,21 @@ const orderController = ()=>{
             res.render('customers/orders',{orders: orders,moment: moment})
             // console.log(orders)
         },
+        // async fn bcoz findById() returns promise so using await
         async show(req,res){
+            // find the order by id
+            // name = id in req.params.id should be same as :id mentioned in web.js routes in /customer/orders/:id
             const order = await Order.findById(req.params.id)
 
             // Authorize user
+            // if user is same as user who place the order(security check then only show single order details -> else any user can fetch order details by submiting id)
+            // req.user._id and order.customerId are both objects, so can't compare objects directly
+            // so convert to string
             if(req.user._id.toString() === order.customerId.toString()){
+                // pass order object which we fetched from db using id at frontend to show updated status and order related details
                  return res.render('customers/singleOrder',{order})
             }
+            // if user is not who placed  the order redirect to home page
             return res.redirect('/')
         }
 

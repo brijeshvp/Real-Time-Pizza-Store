@@ -25,10 +25,6 @@ app.use(flash());   // use flash as a middleware in express
 // to display flash msg in frontend, specify to express
 
 
-const Emitter = require('events')
-// Event emitter
-const eventEmitter = new Emitter()
-app.set('eventEmitter',eventEmitter)
 
 // db connection
 // Import the mongoose module
@@ -48,6 +44,19 @@ const MongoDbStore = require('connect-mongo');
 
 
 
+// event emitters follows pop-ups architecture
+// we can fire an event from anywhere in our nodejs app and can listen at some other place in our app.
+// this way we can keep files seperately and communicate info betn files in our app.
+
+// in our case, we want to emit an event from statusController.js in admin when order status is updated. so that event can be listen by socket and order status reflected in frontend in real time
+const Emitter = require('events') // node.js built in module = events
+// Event emitter
+// create Emitter obj
+const eventEmitter = new Emitter()
+// specify express app that we are using event emitter(to use emitter in entire express app)
+// app.set() 1st arg = key using which we can access the emitter and 2nd arg = emitter obj
+app.set('eventEmitter',eventEmitter)
+// now we can use emitter in our entire app
 
 
 // session config
@@ -123,33 +132,61 @@ const initRoutes = require('./routes/web');
 initRoutes(app);
 
 // Start server
-app.listen(PORT,()=>{
+const server = app.listen(PORT,()=>{
     console.log(`Listening on port: ${PORT}`);
 })
 
 
-// // socket
-// const io= require('socket.io')(server)
-// io.on('connection',(socket) =>{
-//   // join
+// socket config
+// import socket.io
+const io= require('socket.io')
+// call io by passing server(return value of app.listen()) so that socket.io keep watch on our server for real time communication
+io(server)
+// on socket connection, we recieve socket in callback fn
+io.on('connection',(socket) =>{
+  // for every order, we create private room(bcoz socket will listen single order page of particular order)
+  // user's browser will join this private room when it is in single order page
+  // whenever order status changes, event will be emitted and accordingly we will update the order status
+  // private room name must be unique, so that socket can identify which order room belongs to.
+  // so order id must be private room's name(always unique)
 
-//   // console.log(socket.id)
-//   socket.on('join',(orderId) =>{
-//   // console.log(orderId)
-//     socket.join(orderId)
-//   })
-// })
+  // console.log(socket.id)
 
-// eventEmitter.on('orderUpdated',(data) =>{
-//   io.to( `order_${data.id}`).emit('orderUpdated',data)
-// })
+  // we have emitted join event from app.js so capture it here with room name = arg in callback fn
+  socket.on('join',(orderId) =>{
+  // console.log(orderId)
 
-// eventEmitter.on('orderPlaced',(data) =>{
-//   io.to('adminRoom').emit('orderPlaced',data)
-// })
+  // join the room
+    socket.join(orderId)
+  })
+})
+// now go to statusController.js in admin
 
-// // 404 page
-// app.use((req,res) =>{
-//   // res.status(404).send('<h1> 404, Page not found</h1>')
-//   res.status(404).render('errors/404')
-// })
+// we have emitted an event from statusController.js in admin
+
+// now we can listen to that event using emitter obj.on() method
+// 1st arg = event name which is emitted
+// 2nd arg = fn recieving data sent from emitted event
+eventEmitter.on('orderUpdated',(data) =>{
+  // io.to() is used to send msg in private room
+  // arg = room name
+  // .emit() is used to emit an event in specified room
+  // 1st arg = event name
+  // 2nd arg = data to be sent along with event 
+  io.to( `order_${data.id}`).emit('orderUpdated',data)
+})
+// now goto app.js to listen this event
+
+
+// listen to orderPlaced named event emitted from orderController of customers, to get order details in real time at admin side
+// 2nd arg = fn recieving order data
+eventEmitter.on('orderPlaced',(data) =>{
+  // send data to adminRoom named private room(the only room for admin) and emit the event named orderPlaced to listen in admin.js
+  io.to('adminRoom').emit('orderPlaced',data)
+})
+
+// 404 page
+app.use((req,res) =>{
+  // res.status(404).send('<h1> 404, Page not found</h1>')
+  res.status(404).render('errors/404')
+})

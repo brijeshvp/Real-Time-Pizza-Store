@@ -129,3 +129,14 @@ A JavaScript date library for parsing, validating, manipulating, and formatting 
 install using: 
     npm install moment --save
 Guide: https://momentjs.com/
+
+
+using line awesome icons at single order page at user side for showing pizza status icons
+Using cdn of line awesome in layout.js file
+Guide:- https://icons8.com/line-awesome
+
+
+socket.io (web sockets) for real time communication 
+install using:-
+    npm install socket.io
+Guide:- https://socket.io/
