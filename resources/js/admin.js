@@ -5,6 +5,7 @@ import Noty from 'noty'
 
 // we recieving socket obj from app.js
 export function initAdmin(socket) {
+    // console.log(socket);
     // fetch admin order section table's tbody
     // to feed orders using web sockets(in real time)
     const orderTableBody = document.querySelector('#orderTableBody')
@@ -17,6 +18,7 @@ export function initAdmin(socket) {
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
+        console.log(res.data)
         // will get all orders from admin's orderController in res.data
         orders = res.data
         // generate markup and fedd in table's tbody
@@ -42,6 +44,7 @@ export function initAdmin(socket) {
       }
 
     function generateMarkup(orders) {
+        // console.log(orders);
         // orders is array of orders
         // map function on array
         // map function applies a function on each elt of array and returns modified array

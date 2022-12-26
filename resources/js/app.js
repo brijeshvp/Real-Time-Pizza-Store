@@ -2,9 +2,9 @@
 import axios from 'axios'   
 import Noty from  'noty'
 // import from admin.js
-import { initAdmin } from './admin'
+import { initAdmin } from './admin.js'
 import moment from 'moment'
-// import {initStripe} from './stripe'
+import {initStripe} from './stripe'
 
 // get span tag in navbar near cart icon to display totalQty in cart 
 let cartCounter = document.querySelector('#cartCounter')
@@ -68,11 +68,10 @@ if(alertMsg){
     },2000)
 }
 
-
-
+// // works here
+// initAdmin(socket);
 
 // Change order status logic
-
 // fetch status name's li tag from single order page
 // statuses is array of li's
 let statuses = document.querySelectorAll('.status_line')
@@ -109,6 +108,8 @@ function updateStatus(order) {
        }
     //    if value of dataProp is same as order status(in db), show time in previously completed status and make current status color = primary
        if(dataProp === order.status) {
+            // for next current status, stepCompleted will be false
+            stepCompleted = false
         // show status update time in this status(since it is completed)
         // updatedAt is field automatically added in db for any document
             time.innerText = moment(order.updatedAt).format('hh:mm A')
@@ -118,8 +119,7 @@ function updateStatus(order) {
            if(status.nextElementSibling) {
             status.nextElementSibling.classList.add('current')
            }
-           // for next current status, stepCompleted will be false
-           stepCompleted = false
+           
        }
     }) 
 
@@ -179,7 +179,6 @@ socket.on('orderUpdated',(data) =>{
         // layout: 'bottomLeft',    // by default -> topRight
     }).show();
 })
-
 
 
 

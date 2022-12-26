@@ -223,3 +223,52 @@ section.status{
     font-size: 14px;
     margin-top: 8px;
 }
+
+// when width reduces 1060px
+@media(max-width: 1060px){
+    // reduce width to 90% of container of pizza home page
+    .container{
+        max-width: 90%;
+    }
+    // show scroll on small screen on table of customer order section and admin order section(all tables)
+    table{
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }   
+}
+
+// on small screen size, reduce font of single order page(for status icons)
+@media(max-width: 768px){
+    .status-box ul li span::before{
+        font-size: 34px;
+    }
+}
+
+// stripe css(from older documentation of stripe)
+// to style stripe widget in cart.ejs
+.StripeElement {
+    box-sizing: border;
+    height: 40px;
+    width: 50%;     // added manually
+    margin-left: auto;  // added manually
+    padding: 10px 12px;
+    border: 1px solid transparent;
+    // border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus{
+    box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid{
+    border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill{
+    background-color: #fefde5 !important;
+}

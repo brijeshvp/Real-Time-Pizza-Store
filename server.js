@@ -139,9 +139,10 @@ const server = app.listen(PORT,()=>{
 
 // socket config
 // import socket.io
-const io= require('socket.io')
 // call io by passing server(return value of app.listen()) so that socket.io keep watch on our server for real time communication
-io(server)
+const io = require('socket.io')(server);
+ 
+
 // on socket connection, we recieve socket in callback fn
 io.on('connection',(socket) =>{
   // for every order, we create private room(bcoz socket will listen single order page of particular order)
@@ -185,8 +186,8 @@ eventEmitter.on('orderPlaced',(data) =>{
   io.to('adminRoom').emit('orderPlaced',data)
 })
 
-// 404 page
-app.use((req,res) =>{
-  // res.status(404).send('<h1> 404, Page not found</h1>')
-  res.status(404).render('errors/404')
-})
+// // 404 page
+// app.use((req,res) =>{
+//   // res.status(404).send('<h1> 404, Page not found</h1>')
+//   res.status(404).render('errors/404')
+// })

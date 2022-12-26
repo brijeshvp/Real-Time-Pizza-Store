@@ -2,13 +2,14 @@
 const Order = require('../../../models/order')
 // js library for date formating
 const moment = require('moment')
-// const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
 // orderController is a factory function -> which creates and returns an object(object creational pattern technique)
 const orderController = ()=>{
     // return object containing functions
     return {
         store(req,res){
+            // // uncomment below 2 lines to test ajax call for payment gateway stripe config
             // console.log(req.body)
             // return;
 
@@ -21,9 +22,6 @@ const orderController = ()=>{
 
             // since doing ajax call(post req), we have to return json(return res.redirect will not work)
             if(!phone || !address){
-                // req.flash('error','All fields are required')
-                // return res.redirect('/cart')
-
                 // 422 code is sent when there is any validation error
                 return res.status(422).json({message: 'All fields are required'});
             }
@@ -42,27 +40,40 @@ const orderController = ()=>{
                 // customerId of order collection is refering to user id in user collection
                 // so .populate() will fetch whole user details based on customerId here
                 Order.populate(result,{path:'customerId'},(err,placedOrder) =>{
+                    // // now we are using ajax so no need req.flash()
                     // req.flash('success','Order placed successfully')
+
+                    // // below 4 lines for testing
+                    // delete req.session.cart;
+                    // // Emit
+                    // const eventEmitter = req.app.get('eventEmitter');
+                    // eventEmitter.emit('orderPlaced',placedOrder);
+                    // return res.json({message: 'Order Placed Successfully'});
+
 
                     // Stripe payment
                     // if paymentType = card then only run this block
                     if(paymentType === 'card'){
+                    // The content of this section refers to a Legacy feature.Use the PaymentIntents API instead.
+                    // The Charges API doesn’t support the following features, many of which are required for credit card compliance: Merchants in India,  Bank requests for card authentication, Strong Customer Authentication.
+
+                    
                         stripe.charges.create({
-                            // amount will be in:
-                            // 1) for rupees -> in paisa
-                            // 2) for dollar -> in cents
+                        //         // amount will be in:
+                        //         // 1) for rupees -> in paisa
+                        //         // 2) for dollar -> in cents
                             amount: (req.session.cart.totalPrice) * 100,   // convert rupee -> to paise
                             source: stripeToken,
                             currency: 'inr',    // indian national rupee
                             description: `Pizza order: ${placedOrder._id}`  // description will be order id -> this will be stored in stripe transactions.order id is a unique identifier for stripe transactions
                         }).then((res) =>{
-                            console.log(res);
+                            // console.log(res);
                             placedOrder.paymentStatus = true;
                             placedOrder.paymentType = paymentType
-                            // we need to save in database again becoz paymentStatus key is changed(to reflect the change in database)
-                            // ord will recieve result saved 
+                        //         // we need to save in database again becoz paymentStatus key is changed(to reflect the change in database)
+                        //         // ord will recieve result saved 
                             placedOrder.save().then((ord) =>{
-                                // console.log(ord)
+                                // console.log(ord);
 
                                 // get the emitter here
                                 const eventEmitter = req.app.get('eventEmitter')
@@ -87,7 +98,7 @@ const orderController = ()=>{
                         delete req.session.cart
                         return res.json({message: 'Order placed successfully'})
                     }
-                    // Emit on socket
+                    // // Emit on socket
                     // const eventEmitter = req.app.get('eventEmitter')
                     // eventEmitter.emit('orderPlaced',placedOrder)
 

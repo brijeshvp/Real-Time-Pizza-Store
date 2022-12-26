@@ -45,6 +45,7 @@ const initRoutes = (app)=> {
 
     // user order page routes
     const orderControllerObj = orderController()
+    app.post('/orders',orderController().store)
     app.post('/orders',auth, orderControllerObj.store)
     app.get('/customer/orders', auth,orderControllerObj.index)
     // :id denotes that it is dynamically changed for each order
@@ -52,8 +53,8 @@ const initRoutes = (app)=> {
     app.get('/customer/orders/:id', auth,orderControllerObj.show)
 
     // admin routes
-    const adminOrderControllerObj = adminOrderController()
-    app.get('/admin/orders',admin,adminOrderControllerObj.index)
+    // const adminOrderControllerObj = adminOrderController()
+    app.get('/admin/orders',admin,adminOrderController().index)
 
     const statusControllerObj = statusController();
     app.post('/admin/order/status',admin,statusControllerObj.update)

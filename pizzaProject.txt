@@ -140,3 +140,22 @@ socket.io (web sockets) for real time communication
 install using:-
     npm install socket.io
 Guide:- https://socket.io/
+
+refer tailwind css breakpoints:
+    https://tailwindcss.com/docs/responsive-design#using-custom-breakpoints
+
+tailwindcss follows mobile first design approach. so by default whatever style you give, give as per mobile screen. then using media query and tailwind css breakpoints, you can change the style for bigger screens
+
+
+stripe for payment gateway:
+    stripe js reference: https://stripe.com/docs/js/including
+    stripe js github(excellent guide): https://github.com/stripe/stripe-js
+    stripe.com account: https://dashboard.stripe.com/dashboard
+    Goto developers/api keys for key integration in stripe.com account
+
+use stripe for client side(js and front end), install using:
+    npm install @stripe/stripe-js
+stripe client side guide: https://github.com/stripe/stripe-js
+use stripe for server side(node and express), install using: 
+    npm i stripe
+stripe server side guide: https://www.npmjs.com/package/stripe

@@ -8,6 +8,7 @@ const orderController = ()=>{
     // return object containing functions
     return {
         index(req,res){
+            // console.log(req.xhr);
             // fetch only not completed orders
             // {status: {$ne: 'completed'}} means status is not equal to completed
             // {sort:{'createdAt': -1}} to sort orders in decreasing order of time(most recent first)
