@@ -1,137 +1,144 @@
-@import './variables';  // import _variables.scss file
+@import './variables'; // import _variables.scss file
 // import below files to use noty(to display msgs)
 @import '~noty/src/noty.scss';
 @import '~noty/src/themes/mint.scss';
 
-body{
+body {
     font-family: 'Lato', sans-serif; // copy css rule from lato google font
     -webkit-font-smoothing: antialiased; // anti aliasing makes the font Smooth on level of pixel, as opposed to the subpixel. Switching from subpixel rendering to antialiasing for light text on dark backgrounds makes it look lighter.
     color: $dark;
 }
 
-nav:first-child div{
+// styling logo and logo title in navbar
+nav:first-child div {
     display: flex;
 }
 
-#logo-title{
+#logo-title {
     display: flex;
     align-items: center;
     margin-left: 8px;
     font-weight: bold;
     font-size: 22px;
 }
+
 // apply primary color to cart icon at top right in navbar
-nav li:last-child a{
+nav li:last-child a {
     background: $primary;
-    &:hover{
+
+    &:hover {
         background: $primary-hover;
     }
 }
 
 // set hover effect on menus in navbar
-nav li a{
+nav li a {
     transition: $smooth;
-    &:hover{
+
+    &:hover {
         color: $primary;
     }
 }
 
 // greyish tint in background of hero section
-section.hero{
+section.hero {
     background: $secondary;
 }
 
 // greyish tint to pizza size in single pizza card
-.size{
+.size {
     background: $secondary;
 }
 
 // style for add-to-cart btn in single pizza card
-.add-to-cart{
+.add-to-cart {
     border: 2px solid $primary;
     color: $primary;
     transition: $smooth;
-    
-    &:hover{
+
+    &:hover {
         background: $primary;
         border-color: $pure;
         color: $pure;
     }
-    &:focus{
+
+    &:focus {
         outline: none;
     }
 }
 
 // style for order now btn in hero section
-.btn-primary{
+.btn-primary {
     background: $primary;
     transition: $smooth;
 
-    &:hover{
+    &:hover {
         background: $primary-hover;
     }
 }
 
 // greyish tint to background of cart page 
-section.cart{
+section.cart {
     background: $secondary;
+
     // inside cart section, give primary color to total price figure
-    .amount{
+    .amount {
         color: $primary;
     }
 }
 
 // greyish tint to background of login page
-section.login{
+section.login {
     background: $secondary;
     // subtract 86px(height of navbar)
     min-height: calc(100vh - 86px);
 }
 
 // style dont have account btn on login page
-.dont-have-account{
+.dont-have-account {
     color: $primary;
     transition: $smooth;
-    &:hover{
+
+    &:hover {
         color: $primary-hover;
     }
 }
 
 // to style noty msgs
-.noty_theme_mint{
+.noty_theme_mint {
     border-radius: 50px !important;
     padding-left: 8px !important;
 }
 
 // to give orange color to  order id in order section
-a.link{
+a.link {
     color: $primary;
 }
 
 // to style single order page container at user side
-section.status{
+section.status {
     background: $secondary;
     min-height: calc(100vh - 86px);
 }
 
 // give padding to container in single order page 
-.status-box{
+.status-box {
     padding: 60px 0 0;
 }
 
 // make position relative for spans where we need to show dots in single order page so that we can do position absolute in after pseudo selector
-.status-box ul li span{
+.status-box ul li span {
     position: relative;
     padding-left: 20px;
 }
 
 // to align container of status names with upper container in single order page
-.status-box ul{
+.status-box ul {
     margin-left: 84px;
 }
 
 // Dots in single order tracking page
-.status-box ul li span:after{
+.status-box ul li span:after {
     content: '';
     position: absolute;
     left: -10px;
@@ -146,7 +153,7 @@ section.status{
 
 
 // Icons of status names in single order page
-.status-box ul li span:before{
+.status-box ul li span:before {
     // line awesome library we are using for icons
     font-family: "Line Awesome Free";
     font-size: 46px;
@@ -154,38 +161,38 @@ section.status{
     position: absolute;
     left: -90px;
     top: 50%;
-    transform:translateY((-50%)) ;
+    transform: translateY((-50%));
     color: inherit;
 }
 
 // specify different icons to all 5 status names in single order page
-.status-box ul li:nth-child(1) span:before{
+.status-box ul li:nth-child(1) span:before {
     content: '\f46c';
 }
 
-.status-box ul li:nth-child(2) span:before{
+.status-box ul li:nth-child(2) span:before {
     content: '\f560';
 }
 
-.status-box ul li:nth-child(3) span:before{
+.status-box ul li:nth-child(3) span:before {
     content: '\f818';
 }
 
-.status-box ul li:nth-child(4) span:before{
+.status-box ul li:nth-child(4) span:before {
     content: '\f0d1';
 }
 
-.status-box ul li:nth-child(5) span:before{
+.status-box ul li:nth-child(5) span:before {
     content: '\f582';
 }
 
 // again specify position relative to give before pseudo selector absolute position below
-.status-box ul li{
+.status-box ul li {
     position: relative;
 }
 
 // Lines
-.status-box ul li::before{
+.status-box ul li::before {
     content: '';
     position: absolute;
     top: 0;
@@ -197,61 +204,63 @@ section.status{
 }
 
 // give box-shadow to Last dot to specify seperate styling
-.status-box ul li:nth-child(5) span::after{
-    box-shadow:  0 20px 1px 20px $secondary;
+.status-box ul li:nth-child(5) span::after {
+    box-shadow: 0 20px 1px 20px $secondary;
 }
 
 
 // line gray
 // if class = step-completed for li in single order page, make line,dot and text gray
-.status-box ul li.step-completed::before{
+.status-box ul li.step-completed::before {
     background: $gray;
 }
 
 // dot gray
-.status-box ul li.step-completed span:after{
+.status-box ul li.step-completed span:after {
     background: $gray;
 }
 
 // text gray
-.status-box ul li.step-completed span{
+.status-box ul li.step-completed span {
     color: $gray;
 }
 
 // Current Status
 // if class = current, make text, dot and icon color = primary(for highlighting current status of order in single order page)
-.status-box ul li.current span{
+.status-box ul li.current span {
     color: $primary;
 }
 
-.status-box ul li.current span::after{
+.status-box ul li.current span::after {
     background: $primary;
 }
 
 // to style status updation time in single order page
-.status-box ul li small{
+.status-box ul li small {
     float: right;
     font-size: 14px;
     margin-top: 8px;
 }
 
 // when width reduces 1060px
-@media(max-width: 1060px){
+@media(max-width: 1060px) {
+
     // reduce width to 90% of container of pizza home page
-    .container{
+    .container {
         max-width: 90%;
     }
+
     // show scroll on small screen on table of customer order section and admin order section(all tables)
-    table{
+    table {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
-    }   
+    }
 }
 
 // on small screen size, reduce font of single order page(for status icons)
-@media(max-width: 768px){
-    .status-box ul li span::before{
+@media(max-width: 768px) {
+    .status-box ul li span::before {
         font-size: 34px;
     }
 }
@@ -261,8 +270,8 @@ section.status{
 .StripeElement {
     box-sizing: border;
     height: 40px;
-    width: 50%;     // added manually
-    margin-left: auto;  // added manually
+    width: 50%; // added manually
+    margin-left: auto; // added manually
     padding: 10px 12px;
     border: 1px solid transparent;
     // border-radius: 4px;
@@ -272,14 +281,64 @@ section.status{
     transition: box-shadow 150ms ease;
 }
 
-.StripeElement--focus{
+.StripeElement--focus {
     box-shadow: 0 1px 3px 0 #cfd7df;
 }
 
-.StripeElement--invalid{
+.StripeElement--invalid {
     border-color: #fa755a;
 }
 
-.StripeElement--webkit-autofill{
+.StripeElement--webkit-autofill {
     background-color: #fefde5 !important;
+}
+
+
+// 404 page styling
+
+/*======================
+    404 page
+=======================*/
+.page_404 {
+    padding: 40px 0;
+    background: #fff;
+    font-family: 'Arvo', serif;
+    margin-top: 3%;
+}
+
+.page_404 .container{
+    margin: auto;
+}
+
+.page_404 img {
+    width: 100%;
+}
+
+.four_zero_four_bg {
+
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+}
+
+
+.four_zero_four_bg h1 {
+    font-size: 80px;
+}
+
+.four_zero_four_bg h3 {
+    font-size: 80px;
+}
+
+.link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+    // background: #39ac31;
+    background: $primary;
+    margin: 20px 0;
+    display: inline-block;
+}
+
+.contant_box_404 {
+    margin-top: -50px;
 }

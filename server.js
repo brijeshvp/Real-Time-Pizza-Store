@@ -29,6 +29,7 @@ app.use(flash());   // use flash as a middleware in express
 // db connection
 // Import the mongoose module
 const mongoose = require("mongoose");
+mongoose.set('strictQuery', true);
 // Set up default mongoose connection
 const url = process.env.MONGO_CONNECTION_URL;
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -130,6 +131,11 @@ app.set('views',path.join(__dirname,'/resources/views'));   // specify views/tem
 // call the function initRoutes and pass app object so we can do request like app.get, app.post, etc from there
 const initRoutes = require('./routes/web');
 initRoutes(app);
+
+app.use((req,res)=>{
+  // res.status(404).send('<h1>404, Page not found</h1>')
+  res.status(404).render('errors/404');
+})
 
 // Start server
 const server = app.listen(PORT,()=>{
