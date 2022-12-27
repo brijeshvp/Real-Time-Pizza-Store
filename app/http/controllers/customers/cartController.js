@@ -1,9 +1,10 @@
+const stripe = require('stripe')('sk_test_51L996nSAv2MZQ1Dp3Ctyq7ddrO0MVjUFZUVHMcUEZOMSxR6evTlChVPg0SPtmuWOJQBbeinGywOS9qYyDayFGl3P007dyI2tMR');
 // cartController is a factory function -> which creates and returns an object(object creational pattern technique)
 const cartController = ()=>{
     // return object containing functions
     return{
-        index(req,res){
-            res.render('customers/cart')
+        async index(req,res){
+            res.render('customers/cart');
         },
         update(req, res) {
             // format to store data in cart:-

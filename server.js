@@ -48,7 +48,7 @@ const MongoDbStore = require('connect-mongo');
 // we can fire an event from anywhere in our nodejs app and can listen at some other place in our app.
 // this way we can keep files seperately and communicate info betn files in our app.
 
-// in our case, we want to emit an event from statusController.js in admin when order status is updated. so that event can be listen by socket and order status reflected in frontend in real time
+// in our case, we want to emit an event from statusController.js in admin when order status is updated. so that event can be listen by socket and order status reflected in user's frontend in real time
 const Emitter = require('events') // node.js built in module = events
 // Event emitter
 // create Emitter obj

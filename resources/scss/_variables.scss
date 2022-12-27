@@ -1,9 +1,14 @@
 // underscore in file name, denotes that it is partial file which means it is used for just import in other scss files
 
 // colors
-$primary: #FE5F1E;
-$primary-hover: #b23301;
-$secondary: #F8F8F8;
+// $primary: #FE5F1E;   // old
+// $primary: #a41efe;    // new
+$primary: #ff3737;   // new final
+// $primary-hover: #b23301;    // old
+// $primary-hover: #480c71;    // new
+$primary-hover: #f10c0c;    // new final
+// $secondary: #F8F8F8;    
+$secondary: #ede2e2;    // new final    
 $pure: #fff;
 $dark: #232323;
 $gray: #ccc;

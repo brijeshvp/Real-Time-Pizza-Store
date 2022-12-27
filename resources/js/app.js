@@ -179,13 +179,3 @@ socket.on('orderUpdated',(data) =>{
         // layout: 'bottomLeft',    // by default -> topRight
     }).show();
 })
-
-
-
-
-
-
-
-
-
-

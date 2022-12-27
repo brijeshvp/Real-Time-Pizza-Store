@@ -700,8 +700,7 @@ function _initStripe() {
                       e.preventDefault(); // to prevent form submitting from cart.ejs
                       // get order now cart page's form data here
                       // using FormData object of js(inbuilt class in js)
-                      formData = new FormData(paymentForm);
-                      console.log(formData);
+                      formData = new FormData(paymentForm); // console.log(formData);
                       // console.log(formData.entries());
                       formObj = {};
                       _iterator = _createForOfIteratorHelper(formData.entries());
@@ -724,6 +723,7 @@ function _initStripe() {
                         _context.next = 9;
                         break;
                       }
+                      console.log("not");
                       // simply do the ajax call and don't execute further logic
                       (0,_apiService__WEBPACK_IMPORTED_MODULE_1__.placeOrder)(formObj);
                       return _context.abrupt("return");

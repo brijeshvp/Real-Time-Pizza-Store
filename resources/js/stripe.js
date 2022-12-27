@@ -75,7 +75,7 @@ export async function initStripe() {
             // get order now cart page's form data here
             // using FormData object of js(inbuilt class in js)
             let formData = new FormData(paymentForm);
-            console.log(formData);
+            // console.log(formData);
             // console.log(formData.entries());
             let formObj = {};
             for (let [key, value] of formData.entries()) {
@@ -88,6 +88,7 @@ export async function initStripe() {
             // verify card(token) before doing ajax call
             // if cod is selected(paymentElement is null)
             if(!paymentElement){
+                console.log("not");
                 // simply do the ajax call and don't execute further logic
                 placeOrder(formObj);
                 return;   

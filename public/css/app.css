@@ -251,35 +251,47 @@ body {
   color: #232323;
 }
 
+nav:first-child div {
+  display: flex;
+}
+
+#logo-title {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  font-weight: bold;
+  font-size: 22px;
+}
+
 nav li:last-child a {
-  background: #FE5F1E;
+  background: #ff3737;
 }
 nav li:last-child a:hover {
-  background: #b23301;
+  background: #f10c0c;
 }
 
 nav li a {
   transition: all 0.3s ease-in-out;
 }
 nav li a:hover {
-  color: #FE5F1E;
+  color: #ff3737;
 }
 
 section.hero {
-  background: #F8F8F8;
+  background: #ede2e2;
 }
 
 .size {
-  background: #F8F8F8;
+  background: #ede2e2;
 }
 
 .add-to-cart {
-  border: 2px solid #FE5F1E;
-  color: #FE5F1E;
+  border: 2px solid #ff3737;
+  color: #ff3737;
   transition: all 0.3s ease-in-out;
 }
 .add-to-cart:hover {
-  background: #FE5F1E;
+  background: #ff3737;
   border-color: #fff;
   color: #fff;
 }
@@ -288,31 +300,31 @@ section.hero {
 }
 
 .btn-primary {
-  background: #FE5F1E;
+  background: #ff3737;
   transition: all 0.3s ease-in-out;
 }
 .btn-primary:hover {
-  background: #b23301;
+  background: #f10c0c;
 }
 
 section.cart {
-  background: #F8F8F8;
+  background: #ede2e2;
 }
 section.cart .amount {
-  color: #FE5F1E;
+  color: #ff3737;
 }
 
 section.login {
-  background: #F8F8F8;
+  background: #ede2e2;
   min-height: calc(100vh - 86px);
 }
 
 .dont-have-account {
-  color: #FE5F1E;
+  color: #ff3737;
   transition: all 0.3s ease-in-out;
 }
 .dont-have-account:hover {
-  color: #b23301;
+  color: #f10c0c;
 }
 
 .noty_theme_mint {
@@ -321,11 +333,11 @@ section.login {
 }
 
 a.link {
-  color: #FE5F1E;
+  color: #ff3737;
 }
 
 section.status {
-  background: #F8F8F8;
+  background: #ede2e2;
   min-height: calc(100vh - 86px);
 }
 
@@ -352,7 +364,7 @@ section.status {
   height: 10px;
   border-radius: 50%;
   transform: translateY(-50%);
-  box-shadow: 0 0 1px 10px #F8F8F8;
+  box-shadow: 0 0 1px 10px #ede2e2;
 }
 
 .status-box ul li span:before {
@@ -402,7 +414,7 @@ section.status {
 }
 
 .status-box ul li:nth-child(5) span::after {
-  box-shadow: 0 20px 1px 20px #F8F8F8;
+  box-shadow: 0 20px 1px 20px #ede2e2;
 }
 
 .status-box ul li.step-completed::before {
@@ -418,11 +430,11 @@ section.status {
 }
 
 .status-box ul li.current span {
-  color: #FE5F1E;
+  color: #ff3737;
 }
 
 .status-box ul li.current span::after {
-  background: #FE5F1E;
+  background: #ff3737;
 }
 
 .status-box ul li small {

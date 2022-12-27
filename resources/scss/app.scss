@@ -9,6 +9,17 @@ body{
     color: $dark;
 }
 
+nav:first-child div{
+    display: flex;
+}
+
+#logo-title{
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    font-weight: bold;
+    font-size: 22px;
+}
 // apply primary color to cart icon at top right in navbar
 nav li:last-child a{
     background: $primary;
