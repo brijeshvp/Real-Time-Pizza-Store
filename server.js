@@ -75,7 +75,8 @@ const session = require('express-session');
 // Guide to use express-session: https://www.npmjs.com/package/express-session
 // Guide to use mongodb store with session: https://github.com/jdesboeufs/connect-mongo
 app.use(session({
-    secret: process.env.COOKIE_SECRET,
+//     secret: process.env.COOKIE_SECRET,    // REMOVED
+    secret: "thisismysecret",      // ADDED
     resave: false,
     // specify store here to store sessions 
     store: MongoDbStore.create({
