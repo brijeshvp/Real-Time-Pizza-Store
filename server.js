@@ -113,7 +113,8 @@ app.use((req,res,next)=>{
 
 
 // port
-let PORT = process.env.PORT || 3000;
+// let PORT = process.env.PORT || 3000;    // REMOVED
+let PORT = 10000;
 
 // specify static dir to express(so that it can run css and js)
 // default MIME type is text/html
