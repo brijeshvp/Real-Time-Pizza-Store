@@ -1,55 +1,48 @@
-<!-- home page main content -->
 <section class="hero py-16">
-    <div class="container mx-auto flex items-center justify-between">
-        <!-- left sub-section -->
-        <div class="w-1/2">
-            <h6 class="text-lg"><em>Are You Hungry?</em></h6>
-            <h1 class="text-3xl md:text-6xl font-bold">Don't Wait !</h1>
-            <!-- btn-primary is custom class to give orange background to btn -->
-            <button class="px-6 py-2 rounded-full text-white font-bold mt-4 btn-primary">Order Now</button>
-        </div>
-
-        <!-- right sub-section(big pizza img) -->
-        <div class="w-1/2">
-            <!-- <img src="/img/hero-pizza.png" alt="" /> -->
-            <!-- <img src="https://pngimg.com/uploads/pizza/pizza_PNG44084.png" alt="" /> -->
-            <img src="/img/hero-2.png" alt="" />
-        </div>
-
+  <div class="container mx-auto flex items-center justify-between">
+    <div class="w-1/2">
+      <h6 class="text-lg"><em>Are You Hungry?</em></h6>
+      <h1 class="text-3xl md:text-6xl font-bold">Don't Wait !</h1>
+      <button
+        class="px-6 py-2 rounded-full text-white font-bold mt-4 btn-primary"
+      >
+        Order Now
+      </button>
     </div>
+
+    <div class="w-1/2">
+      <img src="/img/hero-2.png" alt="" />
+    </div>
+  </div>
 </section>
 
 <!-- pizza items -->
 <section class="menu container mx-auto py-8">
-<h1 class="text-xl font-bold mb-8">All Pizzas</h1>
-<!-- wrapper containing pizza cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 col-gap-12 row-gap-16">
-    <!-- pizzas is array of objects coming from homeController  -->
-    <!-- so we can use forEach loop since array is iterable -->
+  <h1 class="text-xl font-bold mb-8">All Pizzas</h1>
+  <!-- wrapper containing pizza cards -->
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 col-gap-12 row-gap-16"
+  >
     <% pizzas.forEach((pizza)=>{ %>
-        <!-- single pizza card -->
-        <div class="w-full md:w-64">
-        <img class="h-40 mb-4 mx-auto" src="/img/<%= pizza.image %>" alt="" />
-        <!-- wrapper for pizza name,size,prize,add button -->
-        <div class="text-center">
-            <h2 class="mb-4 text-lg"><%= pizza.name %></h2>
-            <!-- size is the custom class to give greyish tint to pizza size -->
-            <span class="size py-1 px-4 rounded-full uppercase text-xs"><%= pizza.size %></span>
-            <!-- wrapper to use flex to align prize and add button side by side -->
-            <div class="flex items-center justify-around mt-6">
-            <span>₹ <%= pizza.price %></span>
-            <!-- add-to-cart is custom class to style add to cart btn -->
-            <!-- set data attribute data-<any name> -->
-            <!-- so that we can get this data in js -->
-            <!-- convert pizza object to string since can't assign object to data attribute -->
-            <!-- will convert into json in js file -->
-            <button data-pizza="<%= JSON.stringify(pizza) %>" class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold">
-                <span>+</span>
-                <span class="ml-4">Add</span>
-            </button>
-            </div>
+    <div class="w-full md:w-64">
+      <img class="h-40 mb-4 mx-auto" src="/img/<%= pizza.image %>" alt="" />
+      <div class="text-center">
+        <h2 class="mb-4 text-lg"><%= pizza.name %></h2>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs"
+          ><%= pizza.size %></span
+        >
+        <div class="flex items-center justify-around mt-6">
+          <span>₹ <%= pizza.price %></span>
+          <button
+            data-pizza="<%= JSON.stringify(pizza) %>"
+            class="add-to-cart py-1 px-6 rounded-full flex items-center font-bold"
+          >
+            <span>+</span>
+            <span class="ml-4">Add</span>
+          </button>
         </div>
-        </div>
+      </div>
+    </div>
     <% }) %>
-</div>
+  </div>
 </section>

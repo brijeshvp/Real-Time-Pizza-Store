@@ -2,9 +2,7 @@ import axios from 'axios';
 import Noty from 'noty';
 
 export function placeOrder(formObj){
-    // Ajax call
     axios.post('/orders', formObj).then((res) => {
-        // console.log(res.data);
         new Noty({
             type: 'success',
             timeout: 1000,
@@ -17,7 +15,6 @@ export function placeOrder(formObj){
         }, 2000);
 
     }).catch((err) => {
-        // console.log(err);
         new Noty({
             type: 'error',
             timeout: 1000,

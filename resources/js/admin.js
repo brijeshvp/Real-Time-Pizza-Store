@@ -1,57 +1,35 @@
 import axios from 'axios'
-// to show placed at time at admin order section
 import moment from 'moment'
 import Noty from 'noty'
 
-// we recieving socket obj from app.js
 export function initAdmin(socket) {
-    // console.log(socket);
-    // fetch admin order section table's tbody
-    // to feed orders using web sockets(in real time)
     const orderTableBody = document.querySelector('#orderTableBody')
-    let orders = [] // to store all orders
+    let orders = [] 
     let markup // to generate html code for all orders in admin order section
 
-    // get request at /admin/orders
     axios.get('/admin/orders', {
         headers: {
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
         console.log(res.data)
-        // will get all orders from admin's orderController in res.data
         orders = res.data
-        // generate markup and fedd in table's tbody
         markup = generateMarkup(orders)
         orderTableBody.innerHTML = markup
     }).catch((err) => {
         console.log(err)
     })
 
-    // this function will generate all pizza items in a order and return to div of generate markup function below which will then list all pizza items in one order at admin order section(in one row) in table
     function renderItems(items) {
-        // items is object containing pizza objects
-        // so Object.values(items) will give array of pizza objects in one order
         let parsedItems = Object.values(items)
-        // this will return array of html markup for all pizza name and qty in single order
         return parsedItems.map((menuItem) => {
             return `
                 <p>${ menuItem.item.name } - ${ menuItem.qty } pcs </p>
             `
         }).join('')
-        // .join() method will combine this array of markup with no delimeter
-        // so this fn will finally generate array of paragraphs with pizza name and qty in one order
       }
 
     function generateMarkup(orders) {
-        // console.log(orders);
-        // orders is array of orders
-        // map function on array
-        // map function applies a function on each elt of array and returns modified array
-        // refer this guide: https://www.w3schools.com/jsref/jsref_map.asp
-
-        // so this will return array of markup inside map function
-        
         return orders.map((order) => {
             return `
                 <tr>
@@ -101,15 +79,9 @@ export function initAdmin(socket) {
             </tr>
         `
         }).join('')
-        // .join() method will combine this array of markup with no delimeter
-        // so this function will returns rows of all orders at admin order section
     }
 
-    // Socket
-    // listen to event named orderPlaced
-    // 2nd arg = fn recieving order details of newly placed order
     socket.on('orderPlaced', (order) => {
-        // show new order msg in admin section
         new Noty({
             type: 'success',
             timeout: 1000,
@@ -117,14 +89,8 @@ export function initAdmin(socket) {
             progressBar: false,
         }).show();
 
-        // orders is array
-        // push() method will add new orders to end of array
-        // but we want new orders on top
-        // so use unshift() which adds elt to front of array
         orders.unshift(order)
 
-        // clear previously available orders in order table in admin section and feed new array orders by generating its markup
-        // NOTE: in new orders array, new orders are at top
         orderTableBody.innerHTML = ''
         orderTableBody.innerHTML = generateMarkup(orders)
     })
