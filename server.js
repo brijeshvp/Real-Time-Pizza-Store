@@ -31,7 +31,12 @@ app.use(flash());   // use flash as a middleware in express
 const mongoose = require("mongoose");
 mongoose.set('strictQuery', true);
 // Set up default mongoose connection
-const url = process.env.MONGO_CONNECTION_URL;
+
+
+// const url = process.env.MONGO_CONNECTION_URL;   // REMOVED
+const url = "mongodb://0.0.0.0:27017/pizza"     // ADDED
+
+
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 // Get the default connection
 const connection = mongoose.connection;
@@ -70,7 +75,8 @@ const session = require('express-session');
 // Guide to use express-session: https://www.npmjs.com/package/express-session
 // Guide to use mongodb store with session: https://github.com/jdesboeufs/connect-mongo
 app.use(session({
-    secret: process.env.COOKIE_SECRET,
+//     secret: process.env.COOKIE_SECRET,    // REMOVED
+    secret: "thisismysecret",      // ADDED
     resave: false,
     // specify store here to store sessions 
     store: MongoDbStore.create({
