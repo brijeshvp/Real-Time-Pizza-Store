@@ -17,7 +17,7 @@ app.use(flash());   // use flash as a middleware in express
 const mongoose = require("mongoose");
 mongoose.set('strictQuery', true);
 
-const url = "mongodb://0.0.0.0:27017/pizza"   
+const url = process.env.MONGO_CONNECTION_URL
 
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
